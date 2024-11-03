@@ -14,4 +14,18 @@ function createGrid(dimension) {
     }
 }
 
+let mouseDown = false
+document.body.onmousedown = () => (mouseDown = true);
+document.body.onmouseup = () => (mouseDown = false);
+
+function draw(element) {
+    element.style.backgroundColor = "#646464";
+}
+
+grid.addEventListener("mouseover", (e) => {
+    if (mouseDown === true) {
+        draw(e.target);
+    }
+})
+
 createGrid(4);
