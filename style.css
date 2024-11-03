@@ -38,6 +38,9 @@ h1 {
 }
 
 #grid {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
     width: 375px;
     height: 375px;
     border-radius: 8px;
@@ -143,4 +146,4 @@ input[type="color"] {
 input[type="color"]::-webkit-color-swatch {
     border-radius: 5px;
     border: 2px solid #FFD04D;
-  }
+}
