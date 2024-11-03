@@ -10,6 +10,16 @@ function createGrid(dimension) {
         gridSquare.style.width = (gridWidth / dimension) + "px";
         gridSquare.style.height = (gridWidth / dimension) + "px";
         
+        gridSquare.addEventListener("mousedown", (e) => {
+            colorSquare(e.target);
+        })
+
+        gridSquare.addEventListener("mouseenter", (e) => {
+            if (mouseDown === true) {
+                colorSquare(e.target);
+            }
+        })
+
         grid.appendChild(gridSquare);
     }
 }
@@ -17,17 +27,10 @@ function createGrid(dimension) {
 let mouseDown = false
 document.body.onmousedown = () => (mouseDown = true);
 document.body.onmouseup = () => (mouseDown = false);
-grid.onmouseleave = () => (mouseDown = false);
 
-function draw(element) {
+function colorSquare(element) {
     element.style.backgroundColor = "#646464";
 }
-
-grid.addEventListener("mousemove", (e) => {
-    if (mouseDown === true) {
-        draw(e.target);
-    }
-})
 
 let clearButton = document.querySelector("#clear-btn");
 
