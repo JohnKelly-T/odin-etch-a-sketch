@@ -1,6 +1,10 @@
 let grid = document.querySelector("#grid");
 let gridWidth = grid.getBoundingClientRect().width;
+let clearButton = document.querySelector("#clear-btn");
 
+let mouseDown = false
+document.body.onmousedown = () => (mouseDown = true);
+document.body.onmouseup = () => (mouseDown = false);
 
 function createGrid(dimension) {
     let gridSquareNum = dimension * dimension;
@@ -24,15 +28,9 @@ function createGrid(dimension) {
     }
 }
 
-let mouseDown = false
-document.body.onmousedown = () => (mouseDown = true);
-document.body.onmouseup = () => (mouseDown = false);
-
 function colorSquare(element) {
     element.style.backgroundColor = "#646464";
 }
-
-let clearButton = document.querySelector("#clear-btn");
 
 clearButton.addEventListener("click", () => {
     let gridChildren = grid.children;
