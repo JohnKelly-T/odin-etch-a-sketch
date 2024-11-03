@@ -3,6 +3,9 @@ let gridWidth = grid.getBoundingClientRect().width;
 let clearButton = document.querySelector("#clear-btn");
 let gridSizeSlider = document.querySelector("#grid-size-slider");
 let gridSizeText = document.querySelector(".grid-size-text");
+let colorPicker = document.querySelector("#color-picker");
+
+let currentColor = "#646464";
 
 let mouseDown = false
 document.body.onmousedown = () => (mouseDown = true);
@@ -10,6 +13,7 @@ document.body.onmouseup = () => (mouseDown = false);
 
 gridSizeSlider.onmousemove = (e) => updateGridSizeText(e.target.value);
 gridSizeSlider.onchange = (e) => updateGridSize(e.target.value);
+colorPicker.onchange = (e) => updateColor(e.target.value);
 
 function createGrid(dimension) {
     let gridSquareNum = dimension * dimension;
@@ -34,7 +38,7 @@ function createGrid(dimension) {
 }
 
 function colorSquare(element) {
-    element.style.backgroundColor = "#646464";
+    element.style.backgroundColor = currentColor;
 }
 
 function updateGridSize(value) {
@@ -44,6 +48,10 @@ function updateGridSize(value) {
 
 function updateGridSizeText(value) {
     gridSizeText.textContent = `${value} x ${value}`;
+}
+
+function updateColor(value) {
+    currentColor = value;
 }
 
 clearButton.addEventListener("click", () => {
