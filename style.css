@@ -38,6 +38,7 @@ h1 {
 }
 
 #grid {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     overflow: hidden;
@@ -45,8 +46,17 @@ h1 {
     height: 375px;
     border-radius: 8px;
     background-color: #D9D9D9;
-    box-shadow: 0 5px 8px 3px rgba(0, 0, 0, 0.25), 0 3px 5px 5px rgba(0, 0, 0, .25) inset;
+    box-shadow: 0 5px 8px 3px rgba(0, 0, 0, 0.25);
     margin-bottom: 16px;
+}
+
+#grid::after {
+    content: "";
+    box-shadow: 0 3px 5px 5px rgba(0, 0, 0, .25) inset;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
 }
 
 .menu-container {
