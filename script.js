@@ -1,10 +1,15 @@
 let grid = document.querySelector("#grid");
 let gridWidth = grid.getBoundingClientRect().width;
 let clearButton = document.querySelector("#clear-btn");
+let gridSizeSlider = document.querySelector("#grid-size-slider");
+let gridSizeText = document.querySelector(".grid-size-text");
 
 let mouseDown = false
 document.body.onmousedown = () => (mouseDown = true);
 document.body.onmouseup = () => (mouseDown = false);
+
+gridSizeSlider.onmousemove = (e) => updateGridSizeText(e.target.value);
+gridSizeSlider.onchange = (e) => updateGridSize(e.target.value);
 
 function createGrid(dimension) {
     let gridSquareNum = dimension * dimension;
@@ -32,6 +37,15 @@ function colorSquare(element) {
     element.style.backgroundColor = "#646464";
 }
 
+function updateGridSize(value) {
+    grid.innerHTML = '';
+    createGrid(value);
+}
+
+function updateGridSizeText(value) {
+    gridSizeText.textContent = `${value} x ${value}`;
+}
+
 clearButton.addEventListener("click", () => {
     let gridChildren = grid.children;
     for (let i = 0; i < gridChildren.length; i++) {
@@ -39,4 +53,4 @@ clearButton.addEventListener("click", () => {
     }
 })
 
-createGrid(4);
+createGrid(24);
