@@ -17,13 +17,13 @@ function createGrid(dimension) {
 let mouseDown = false
 document.body.onmousedown = () => (mouseDown = true);
 document.body.onmouseup = () => (mouseDown = false);
-document.body.onmouseleave = () => (mouseDown = false);
+grid.onmouseleave = () => (mouseDown = false);
 
 function draw(element) {
     element.style.backgroundColor = "#646464";
 }
 
-grid.addEventListener("mouseover", (e) => {
+grid.addEventListener("mousemove", (e) => {
     if (mouseDown === true) {
         draw(e.target);
     }
