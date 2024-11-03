@@ -1,4 +1,5 @@
 const DEFAULT_COLOR = "#646464";
+const RAINBOW_COLORS = ["#ff0002", "#ffa500", "#ffeb00", "#93ff00", "#0055ff", "#3400ff", "#9000ff"];
 
 let grid = document.querySelector("#grid");
 let gridWidth = grid.getBoundingClientRect().width;
@@ -7,9 +8,11 @@ let gridSizeSlider = document.querySelector("#grid-size-slider");
 let gridSizeText = document.querySelector(".grid-size-text");
 let colorPicker = document.querySelector("#color-picker");
 let darkeningButton = document.querySelector("#darkening-btn");
+let rgbButton = document.querySelector("#rgb-btn");
 
 let currentColor = "#646464";
-let darkening = false;
+let colorMode = "default";
+let rainbowColor = 0;
 
 let mouseDown = false
 document.body.onmousedown = () => (mouseDown = true);
@@ -43,14 +46,20 @@ function createGrid(dimension) {
 }
 
 function colorSquare(element) { 
-    element.style.backgroundColor = currentColor;
+    if (colorMode === "default") {
+        element.style.backgroundColor = currentColor;
+        element.style.opacity = 1;
+    } else if (colorMode === "rgb") {
+        if (rainbowColor > 6) {
+            rainbowColor = 0;
+        }
+        element.style.backgroundColor = RAINBOW_COLORS[rainbowColor];
+        rainbowColor++;
 
-    if (darkening === false) {
         element.style.opacity = 1;
     } else {
         element.style.opacity = parseFloat(element.style.opacity) + .10;
     }
-  
 }
 
 function updateGridSize(value) {
@@ -75,6 +84,11 @@ clearButton.addEventListener("click", () => {
 })
 
 darkeningButton.addEventListener("click", () => {
-    darkening = (darkening === true) ? false : true;
+    colorMode = "darkening";
 })
+
+rgbButton.addEventListener("click", () =>{
+    colorMode = "rgb";
+})
+
 createGrid(24);
