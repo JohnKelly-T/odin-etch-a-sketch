@@ -161,3 +161,18 @@ input[type="color"]::-webkit-color-swatch {
     border-radius: 5px;
     border: 2px solid #FFD04D;
 }
+
+.gradient-shadow {
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.gradient-shadow::before {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    transform: translate3d(0px, 0px, -1px);
+    background: rgb(255,0,158);
+    background: linear-gradient(135deg, rgba(255,0,158,1) 0%, rgba(255,224,0,1) 50%, rgba(0,230,255,1) 100%);
+    filter: blur(20px);
+}

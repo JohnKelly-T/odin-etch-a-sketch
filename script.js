@@ -9,6 +9,7 @@ let gridSizeText = document.querySelector(".grid-size-text");
 let colorPicker = document.querySelector("#color-picker");
 let darkeningButton = document.querySelector("#darkening-btn");
 let rgbButton = document.querySelector("#rgb-btn");
+let mainContainer = document.querySelector(".main-container");
 
 let currentColor = "#646464";
 let rgb = false;
@@ -190,7 +191,13 @@ darkeningButton.addEventListener("click", () => {
 })
 
 rgbButton.addEventListener("click", () =>{
-    rgb = (rgb === true) ? false : true;
+    if (rgb === true) {
+        rgb = false;
+        mainContainer.classList.remove("gradient-shadow");
+    } else {
+        rgb = true;
+        mainContainer.classList.add("gradient-shadow");
+    }
 })
 
 createGrid(24);
