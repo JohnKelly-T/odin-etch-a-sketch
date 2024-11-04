@@ -39,6 +39,10 @@ function createGrid(dimension) {
         gridSquare.style.width = (gridWidth / dimension) + "px";
         gridSquare.style.height = (gridWidth / dimension) + "px";
 
+        if (darkening === true) {
+            gridSquare.style.opacity = "0";
+        }
+
         grid.appendChild(gridSquare);
     }
 
