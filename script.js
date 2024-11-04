@@ -157,6 +157,11 @@ grid.addEventListener("mousedown", (e) => {
 
 grid.addEventListener("mouseover", (e) => {
     if (mouseDown === true) {
+        if (currentNode === null) {
+            currentNode = e.target;
+            colorSquare(e.target);
+            return;
+        }
         previousNode = currentNode;
         currentNode = e.target;
         plotLine();
