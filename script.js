@@ -15,7 +15,6 @@ let currentColor = "#646464";
 let rgb = false;
 let darkening = false;
 
-let previousMode;
 let hue = 0;
 
 let currentNode = null;
