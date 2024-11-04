@@ -30,16 +30,6 @@ function createGrid(dimension) {
         gridSquare.style.height = (gridWidth / dimension) + "px";
         gridSquare.style.opacity = 0;
 
-        gridSquare.addEventListener("mousedown", (e) => {
-            colorSquare(e.target);
-        })
-
-        gridSquare.addEventListener("mouseenter", (e) => {
-            if (mouseDown === true) {
-                colorSquare(e.target);
-            }
-        })
-
         grid.appendChild(gridSquare);
     }
 }
@@ -78,6 +68,16 @@ function updateGridSizeText(value) {
 function updateColor(value) {
     currentColor = value;
 }
+
+grid.addEventListener("mousedown", (e) => {
+    colorSquare(e.target);
+})
+
+grid.addEventListener("mouseover", (e) => {
+    if (mouseDown === true) {
+        colorSquare(e.target);
+    }
+})
 
 clearButton.addEventListener("click", () => {
     let gridChildren = grid.children;
