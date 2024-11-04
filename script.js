@@ -58,7 +58,9 @@ function colorSquare(element) {
 
         element.style.opacity = 1;
     } else {
+        element.style.backgroundColor = currentColor;
         element.style.opacity = parseFloat(element.style.opacity) + .10;
+        console.log(element.style.opacity);
     }
 }
 
