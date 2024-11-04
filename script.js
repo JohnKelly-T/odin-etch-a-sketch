@@ -180,6 +180,9 @@ darkeningButton.addEventListener("click", () => {
                 gridChildren[i].style.opacity = "1";
             }
         }
+        darkeningButton.style.backgroundColor = "#D9D9D9";
+        darkeningButton.style.color = "#464646";
+        darkeningButton.style.boxShadow = "0 4px 2px 0 rgba(0, 0, 0, 0.25), 0 -2px 1px 4px rgba(0, 0, 0, .25) inset";
     } else {
         darkening = true;
         for (let i = 0; i < gridChildren.length; i++) {
@@ -187,6 +190,9 @@ darkeningButton.addEventListener("click", () => {
                 gridChildren[i].style.opacity = "0";
             }
         }
+        darkeningButton.style.backgroundColor = "#323232";
+        darkeningButton.style.color = "white";
+        darkeningButton.style.boxShadow = "0 4px 2px 0 rgba(0, 0, 0, 0.25), 0 2px 1px 4px rgba(0, 0, 0, .25) inset";
     }
 })
 
