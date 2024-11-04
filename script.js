@@ -1,6 +1,7 @@
 const DEFAULT_COLOR = "#646464";
 
 let grid = document.querySelector("#grid");
+let gridChildren = null;
 let gridWidth = grid.getBoundingClientRect().width;
 let clearButton = document.querySelector("#clear-btn");
 let gridSizeSlider = document.querySelector("#grid-size-slider");
@@ -13,6 +14,10 @@ let currentColor = "#646464";
 let colorMode = "default";
 let hue = 0;
 
+let currentNode = null;
+let previousNode = null;
+let gridSize;
+
 let mouseDown = false
 document.body.onmousedown = () => (mouseDown = true);
 document.body.onmouseup = () => (mouseDown = false);
@@ -22,6 +27,7 @@ gridSizeSlider.onchange = (e) => updateGridSize(e.target.value);
 colorPicker.onchange = (e) => updateColor(e.target.value);
 
 function createGrid(dimension) {
+    gridSize = dimension;
     let gridSquareNum = dimension * dimension;
 
     for (let i = 1; i <= gridSquareNum; i++) {
@@ -32,6 +38,8 @@ function createGrid(dimension) {
 
         grid.appendChild(gridSquare);
     }
+
+    gridChildren = grid.childNodes;
 }
 
 function colorSquare(element) { 
@@ -49,7 +57,7 @@ function colorSquare(element) {
         element.style.opacity = 1;
         return;
     } else {
-        element.style.opacity = parseFloat(element.style.opacity) + .10;
+        element.style.opacity = parseFloat(element.style.opacity) + .1;
         console.log(element.style.opacity);
     }
 
@@ -69,13 +77,83 @@ function updateColor(value) {
     currentColor = value;
 }
 
+function getChildIndex(child) {
+    let children = grid.childNodes;
+
+    for (let i = 0; i < children.length; i++) {
+        if (children[i] === child) {
+            return i;
+        }
+    }
+}
+
+function getChildCoordinate(child) {
+    let childIndex = getChildIndex(child);
+
+    let row = Math.floor(childIndex / gridSize);
+    let col = childIndex % gridSize;
+
+    return [row, col];
+}
+
+function convertCoordinatetoIndex(row, col) {
+    return row * gridSize + col;
+}
+
+// plot line using Bresenham's line algorithm
+function plotLine() {
+    let [x0, y0] = getChildCoordinate(previousNode);
+    let [x1, y1] = getChildCoordinate(currentNode);
+
+    let dx = Math.abs(x1 - x0);
+    let sx = (x0 < x1) ? 1 : -1;
+    let dy = -(Math.abs(y1 - y0));
+    let sy = (y0 < y1) ? 1 : -1;
+    let error = dx + dy;
+
+    let lineArray = []
+
+    while (true) {
+        lineArray.push([x0, y0]);
+        if (x0 === x1 && y0 === y1) {
+            break;
+        }
+
+        let e2 = 2 * error;
+
+        if (e2 >= dy) {
+            error = error + dy;
+            x0 = x0 + sx;
+        }
+
+        if (e2 <= dx) {
+            error = error + dx;
+            y0 = y0 + sy;
+        }
+    }
+
+    if (lineArray.length === 2) {
+        let childIndex = convertCoordinatetoIndex(...lineArray[1]);
+        colorSquare(gridChildren[childIndex]);
+        return;
+    }
+
+    for (let i = 0; i < lineArray.length; i++){
+        let childIndex = convertCoordinatetoIndex(...lineArray[i]);
+        colorSquare(gridChildren[childIndex]);
+    }
+}
+
 grid.addEventListener("mousedown", (e) => {
+    currentNode = e.target;
     colorSquare(e.target);
 })
 
 grid.addEventListener("mouseover", (e) => {
     if (mouseDown === true) {
-        colorSquare(e.target);
+        previousNode = currentNode;
+        currentNode = e.target;
+        plotLine();
     }
 })
 
