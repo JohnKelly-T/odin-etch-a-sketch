@@ -51,7 +51,7 @@ function colorSquare(element) {
         if (hue > 360) {
             hue = 0;
         }
-        
+
         element.style.opacity = "1";
 
         return;
@@ -182,7 +182,6 @@ darkeningButton.addEventListener("click", () => {
         previousMode = colorMode;
         colorMode = "darkening";
         for (let i = 0; i < gridChildren.length; i++) {
-            console.log(gridChildren[i].style.backgroundColor);
             if (gridChildren[i].style.backgroundColor === "") {
                 gridChildren[i].style.opacity = "0";
             }
