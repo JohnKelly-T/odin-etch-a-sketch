@@ -12,6 +12,7 @@ let rgbButton = document.querySelector("#rgb-btn");
 
 let currentColor = "#646464";
 let colorMode = "default";
+let previousMode;
 let hue = 0;
 
 let currentNode = null;
@@ -34,7 +35,6 @@ function createGrid(dimension) {
         let gridSquare = document.createElement("div");
         gridSquare.style.width = (gridWidth / dimension) + "px";
         gridSquare.style.height = (gridWidth / dimension) + "px";
-        gridSquare.style.opacity = 0;
 
         grid.appendChild(gridSquare);
     }
@@ -43,9 +43,7 @@ function createGrid(dimension) {
 }
 
 function colorSquare(element) { 
-    if (colorMode === "default") {
-        element.style.opacity = 1;
-    } else if (colorMode === "rgb") {
+    if (colorMode === "rgb") {
 
         element.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
         hue += 5;
@@ -53,12 +51,14 @@ function colorSquare(element) {
         if (hue > 360) {
             hue = 0;
         }
+        
+        element.style.opacity = "1";
 
-        element.style.opacity = 1;
         return;
-    } else {
+    } else if (colorMode === "darkening") {
         element.style.opacity = parseFloat(element.style.opacity) + .1;
-        console.log(element.style.opacity);
+    } else if (colorMode === "default") {
+        element.style.opacity = "1";
     }
 
     element.style.backgroundColor = currentColor;
@@ -161,12 +161,37 @@ clearButton.addEventListener("click", () => {
     let gridChildren = grid.children;
     for (let i = 0; i < gridChildren.length; i++) {
         gridChildren[i].style.backgroundColor = "#D9D9D9";
-        gridChildren[i].style.opacity = 0;
+        if (colorMode === "darkening") {
+            gridChildren[i].style.opacity = "0";
+        } else {
+            gridChildren[i].style.opacity = "1";
+        }
     }
 })
 
 darkeningButton.addEventListener("click", () => {
-    colorMode = (colorMode === "darkening") ? "default" : "darkening";
+    
+    if (colorMode === "darkening") {
+        colorMode = previousMode;
+        for (let i = 0; i < gridChildren.length; i++) {
+            if (gridChildren[i].style.backgroundColor === "") {
+                gridChildren[i].style.opacity = "1";
+            }
+        }
+    } else {
+        previousMode = colorMode;
+        colorMode = "darkening";
+        for (let i = 0; i < gridChildren.length; i++) {
+            console.log(gridChildren[i].style.backgroundColor);
+            if (gridChildren[i].style.backgroundColor === "") {
+                gridChildren[i].style.opacity = "0";
+            }
+        }
+    }
+
+    console.log(colorMode);
+
+    
 })
 
 rgbButton.addEventListener("click", () =>{
