@@ -180,4 +180,21 @@ input[type="color"]::-webkit-color-swatch {
 #copyright {
     margin-top: auto;
     padding-bottom: 24px;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+#copyright a {
+    color: #FFD04D;
+}
+
+.github-link {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+}
+
+.github-link svg {
+    width: 1.5rem;
 }
